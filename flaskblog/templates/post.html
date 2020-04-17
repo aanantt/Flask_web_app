@@ -1,0 +1,102 @@
+{% extends "layout.html" %} {% block content %}
+<div class="card ml-1">
+    <div class="card-body">
+<article class="media content-section">
+     <img class=" rounded-circle pr-1 pt-2" width=150px height=150px;
+                 src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+    <div class="media-body ml-4">
+        <div class="article-metadata">
+            <a class="mr-2" href="{{url_for('user',post_id=post.author.id)}}">{{ post.author.username }}</a>
+            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            {% if post.author == current_user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <h1 class="article-title">{{ post.title }}</h1>
+        <p class="article-content">{{ post.content }}</p>
+        {% if current_user.has_liked_post(post) %}
+          <i id="dislike" class="fas fa-heart"
+        style="cursor: pointer; color=red; text-decoration=None;" onclick="myfunc()">{{post.likes.count() }} Like(s)</i>
+         {% else %} -->
+        <i id="like" class="fas fa-heart"
+        style="cursor: pointer; color=white; text-decoration=None;" onclick="myfunc()">{{post.likes.count() }} Like(s)</i>
+        {%endif%}
+
+
+        <h2 id="t">{{p}}</h2>
+        <script type="text/javascript">
+             function myfunc(){
+             $(document).ready(function() {
+                var socket = io.connect("http://127.0.0.1:5000")
+                console.log("print")
+                $("#like").on("click", function() {
+                    socket.emit("vote", {{post.id}}, "like")
+                });
+
+                $("#dislike").on("click", function() {
+                    socket.emit("vote",{{post.id}}, "unlike")
+                });
+
+                socket.on('vote_results',function(res){
+                var result=res;
+                $('#t').text(res.results1);
+                });
+
+            });
+             }
+
+        </script>
+    </div>
+</article>
+    </div>
+</div>
+
+<!--<button > <a href="{{url_for('commentaction',post_id=post.id)}}">Comments??</a></button>-->
+<form class="form-inline mr-2 " action="{{url_for('commentaction',post_id=post.id)}}" method="POST">
+     {{ form.hidden_tag() }}
+    <input class="form-control ml-2" type="text" name="comment"  placeholder="Add Comments">
+    <input class="btn btn-outline-success my-2 my-sm-0 mr-2 " type="submit" value="Submit">
+</form>
+<!--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                    <span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                <form action="{{ url_for('delete', post_id=post.id) }}" method="POST">-->
+<!--                    <input class="btn btn-danger" type="submit" value="Delete">-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+{%for i in post_com%}
+
+<div class="container-fluid ">
+    <div class="card">
+        <div class="card-body">
+            <a class="ml-3" href="#">{{i.username_loader(i.user_id)}}</a>
+            <h3 class="ml-3">{{i.comment}}</h3>
+            {% if current_user.username==i.username_loader(i.user_id)%}
+            <div class="row m-2">
+                <a href="{{url_for('delete_comment',comm_id=i.id,user=current_user.id)}}" class="ml-2 btn btn-outline-danger">Delete</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{%endfor%}
+{% endblock content %}
+
+

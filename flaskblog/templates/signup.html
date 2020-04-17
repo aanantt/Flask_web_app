@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="{{ url_for('static',filename='styles/signup.css') }}">
+</head>
+<body>
+   <div class="container">
+      <img src="static/styles/avatar.png" class="avatar">
+      <h1>Sign Up</h1>
+       <form action="" method="post">
+    {{ form.hidden_tag() }}
+     <p>
+        {{ form.username.label }}<br>
+        {{ form.username(size=32) }}
+    </p>
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=32) }}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+    </p>
+    <p>
+        Confirm-Password<br>
+        {{ form.confirm_password(size=32) }}
+    </p>
+      <h2>{{form.submit()}}</h2>
+      <h4 class="have">Already have a account ?</h4>
+       </form>
+   </div>
+</body>
+</html>

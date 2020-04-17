@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{%block content%}
+<div class="card ml-1">
+    <div class="card-body">
+        <article class="media content-section">
+            <img class="rounded-circle article-img"
+                 src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}"
+                 style="width: 150px; height: 150px;">
+            <div class="media-body ml-4">
+                <div class="article-metadata">
+                    <small class="text-muted">{{user.email }}</small>
+                </div>
+                <h2><a class="article-title" href="{{url_for('user',post_id=user.id)}}">{{user.username}}</a></h2>
+            </div>
+         {% if current_user.id==user.id%}
+                <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('accounts')}}">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
+            {% endif%}
+        </article>
+    </div>
+</div>
+<h2 class="mt-4">{{user.username}}'s Post(s)</h2>
+{%for post in user.posts%}
+<div class="card ml-1">
+    <div class="card-body">
+        <article class="media content-section">
+            <img class=" rounded-circle pr-1 pt-2" width=150px height=150px;
+                 src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+            <div class="media-body ml-4">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ post.author.username }}</a>
+                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                </div>
+                <h2><a class="article-title" href="{{ url_for('post',post_id=post.id) }}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+                {% if current_user.has_liked_post(post) %}
+                <i id="dislike" class="fas fa-heart"
+                   style="cursor: pointer; color=red; text-decoration=None;" onclick="myfunc()">{{post.likes.count() }}
+                    Like(s)</i>
+                {% else %} -->
+                <i id="like" class="fas fa-heart"
+                   style="cursor: pointer; color=white; text-decoration=None;" onclick="myfunc()">{{post.likes.count()
+                    }} Like(s)</i>
+                {%endif%}
+            </div>
+        </article>
+    </div>
+</div>
+
+{%endfor%}
+{%endblock content%}

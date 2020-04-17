@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+
+    {% if title %}
+    <title>Flask Blog - {{ title }}</title>
+    {% else %}
+    <title>Flask Blog</title>
+    {% endif %}
+</head>
+<body>
+<header class="site-header">
+   <nav class="navbar navbar-expand-md   navbar-dark" style="background-color: hsl(0, 33%, 60%);">
+      <a class="navbar-brand font-weight-bold font-italic" href="#">Flask Website</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+       {% if current_user.is_authenticated %}
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ml-auto mr-4">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('home')}}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('new_post')}}">New Post</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link " href="{{url_for('me')}}">Me</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link " href="{{url_for('logout')}}">Log Out</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0" action="{{url_for('search')}}" method="post">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search User or Post " aria-label="Search" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Search</button>
+        </form>
+      </div>
+       {% else %}
+        <ul class="navbar-nav ml-auto mr-4">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('login')}}">Log In</a>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('registration')}}">Sign Up</a>
+        </li>
+    </ul>
+       {% endif %}
+    </nav>
+</header>
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+</main>
+
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Home</title>-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
+
+<!--</head>-->
+
+<!--<body>-->
+
+<!--{% for post in posts %}-->
+<!--<div class="card" style="width: 300px; margin: 10px; padding: 10px;">-->
+<!--    <div class="card-block  ">-->
+<!--        <div class="card-header d-flex flex-row">-->
+<!--            <a class="pmd-avatar-list-img   mr-0  " href="javascript:void(0);">-->
+<!--                <img class="rounded-circle article-img" width="90px" height="90px"-->
+<!--                     src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">-->
+<!--            </a>-->
+<!--            <div class="media-body">-->
+<!--                <h3 class="card-title font-weight-bold px-2">{{post.author.username}}</h3>-->
+<!--                <p class="card-subtitle px-2">{{post.title}}</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <p class="card-text">{{post.title}}</p>-->
+<!--        <form action="{{ url_for('delete', post_id=post.id) }}">-->
+
+<!--            <input class="btn btn-danger" type="submit" value="Delete">-->
+<!--        </form>-->
+<!--        <form action="{{ url_for('update_post', post_id=post.id) }}">-->
+
+<!--            <input class="btn btn-primary" type="submit" value="Update">-->
+<!--        </form>-->
+<!--     </div>-->
+<!--</div>-->
+
+<!--{% endfor %}-->
+
+<!--</body>-->
+<!--</html>-->
+
+{% extends "layout.html" %}
+{% block content %}
+{% for post in posts %}
+<div class="card ml-1">
+    <div class="card-body">
+        <article class="media content-section">
+            <img class=" rounded-circle pr-1 pt-2" width=150px height=150px;
+                 src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+
+            <div class="media-body ml-4">
+                <div class="article-metadata">
+            <a class="ml-10" href="{{url_for('user',post_id=post.author.id)}}">{{ post.author.username }}</a>
+                </div>
+                <h2><a class="article-title" href="{{ url_for('post',post_id=post.id) }}">{{ post.title }}</a></h2>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+
+                <div class="row">
+                    <p class="textoverflow ml-2"
+                       style="width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                        {{post.content}}</p>
+                    <a href="{{ url_for('post',post_id=post.id) }}">more..</a>
+                </div>
+                <i id="heart" class="fas fa-heart"
+                   style="cursor: pointer; color=white; text-decoration=None;">{{post.likes.count() }} Like(s)</i>
+            </div>
+        </article>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+
+<div class="card ml-1">
+    <div class="card-body">
+        <article class="media content-section">
+            <img class=" rounded-circle pr-1 pt-2" width=150px height=150px;
+                 src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+
+            <div class="media-body ml-4">
+                <div class="article-metadata">
+            <a class="ml-10" href="{{url_for('user',post_id=post.author.id)}}">{{ post.author.username }}</a>
+                </div>
+                <h2><a class="article-title" href="{{ url_for('post',post_id=post.id) }}">{{ post.title }}</a></h2>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+
+                <div class="row">
+                    <p class="textoverflow ml-2"
+                       style="width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                        {{post.content}}</p>
+                    <a href="{{ url_for('post',post_id=post.id) }}">more..</a>
+                </div>
+                <i id="heart" class="fas fa-heart"
+                   style="cursor: pointer; color=white; text-decoration=None;">{{p.likes.count}} Like(s)</i>
+            </div>
+        </article>
+    </div>
+</div>

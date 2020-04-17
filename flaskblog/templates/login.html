@@ -1,0 +1,178 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Document</title>-->
+<!--    <style type="text/css">-->
+<!--        .login-form {-->
+<!--            width: 340px;-->
+<!--            margin: 50px auto;-->
+<!--        }-->
+
+<!--        .login-form form {-->
+<!--            margin-bottom: 15px;-->
+<!--            background: #f7f7f7;-->
+<!--            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);-->
+<!--            padding: 30px;-->
+<!--        }-->
+
+<!--        .login-form h2 {-->
+<!--            margin: 0 0 15px;-->
+<!--        }-->
+
+<!--        .form-control,-->
+<!--        .btn {-->
+<!--            min-height: 38px;-->
+<!--            border-radius: 2px;-->
+<!--        }-->
+
+<!--        .btn {-->
+<!--            font-size: 15px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar navbar-expand-sm bg-success navbar-dark">-->
+
+<!--    &lt;!&ndash; Brand/logo &ndash;&gt;-->
+<!--    <a class="navbar-brand" href="#">-->
+<!--        <img src="https://www.geeksforgeeks.org/wp-content/uploads/gfg_transparent_white_small.png" alt="logo" style="width:40px;">-->
+<!--    </a>-->
+
+<!--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse_Navbar">-->
+<!--       <span class="navbar-toggler-icon"></span>-->
+<!--   </button>-->
+
+<!--    <div class="collapse navbar-collapse justify-content-end mr-auto" id="collapse_Navbar">-->
+<!--        <ul class="navbar-nav">-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link font-weight-bold text-light " href="#">Home</a>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item  ">-->
+<!--                <a class="nav-link font-weight-bold text-light " href="#">New Post</a>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link font-weight-bold text-light " href="#">Log Out</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <form class="form-inline" action="#">-->
+<!--                    <input class="form-control mr-2  " type="text" placeholder="Search">-->
+<!--                    <button class="btn btn-primary" type="submit">Search</button>-->
+<!--                </form>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--<section>-->
+
+<!--    <div class="login-form">-->
+<!--        <form method="POST" action="">-->
+<!--            {{ form.hidden_tag() }}-->
+<!--            <fieldset class="form-group">-->
+<!--                <legend class="border-bottom mb-4 font-weight-bold text-center">Log In</legend>-->
+<!--                <div class="form-group">-->
+<!--                    {{ form.email.label(class="form-control-label") }}-->
+<!--                    {% if form.email.errors %}-->
+<!--                        {{ form.email(class="form-control form-control-lg is-invalid") }}-->
+<!--                        <div class="invalid-feedback">-->
+<!--                            {% for error in form.email.errors %}-->
+<!--                                <span>{{ error }}</span>-->
+<!--                            {% endfor %}-->
+<!--                        </div>-->
+<!--                    {% else %}-->
+<!--                        {{ form.email(class="form-control form-control-lg") }}-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    {{ form.password.label(class="form-control-label") }}-->
+<!--                    {% if form.password.errors %}-->
+<!--                        {{ form.password(class="form-control form-control-lg is-invalid") }}-->
+<!--                        <div class="invalid-feedback">-->
+<!--                            {% for error in form.password.errors %}-->
+<!--                                <span>{{ error }}</span>-->
+<!--                            {% endfor %}-->
+<!--                        </div>-->
+<!--                    {% else %}-->
+<!--                        {{ form.password(class="form-control form-control-lg") }}-->
+<!--                    {% endif %}-->
+<!--                </div>-->
+<!--            </fieldset>-->
+<!--            <div class="form-group">-->
+<!--                {{ form.submit(class="btn btn-outline-info") }}-->
+<!--            </div>-->
+<!--            <small class="text-muted ml-2">-->
+<!--                <a href="#">Forgot Password?</a>-->
+<!--            </small>-->
+<!--        </form>-->
+<!--        <p class="text-center"><a href="#">Create an Account</a></p>-->
+<!--    </div>-->
+<!--</section>-->
+
+
+
+
+
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
+
+<!--</body>-->
+
+<!--</html>-->
+
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need An Account? <a class="ml-2" href="{{ url_for('registration') }}">Sign Up Now</a>
+        </small>
+    </div>
+{% endblock content %}
